@@ -13,6 +13,7 @@
             --border-color: rgba(134, 150, 160, 0.15); --border-radius: 12px;
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --error-color: #e53e3e; /* Color para errores de validación */
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
         html { scroll-behavior: smooth; }
@@ -50,6 +51,8 @@
         label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-light); }
         input[type="text"], input[type="tel"], input[type="email"], select { width: 100%; padding: 12px 15px; margin-bottom: 20px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 16px; transition: var(--transition); background: rgba(0,0,0,0.2); color: var(--text-light); }
         input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, select:focus { border-color: var(--accent-color); outline: none; box-shadow: 0 0 0 4px rgba(0, 168, 132, 0.2); }
+        /* NUEVO: Estilo para campos con error */
+        .input-error { border-color: var(--error-color) !important; box-shadow: 0 0 0 4px rgba(229, 62, 62, 0.2) !important; }
         .phone-field { display: flex; gap: 10px; margin-bottom: 20px; }
         .phone-field select { -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E0E0E0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; flex: 0 0 120px; margin-bottom: 0;}
         .payment-methods { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
@@ -304,6 +307,15 @@
             });
 
             document.getElementById('confirmBtn').addEventListener('click', async () => {
+                // VALIDACIÓN AÑADIDA
+                if (!validateForm()) {
+                    return; // Detiene la ejecución si el formulario no es válido
+                }
+
+                document.getElementById('confirmBtn').disabled = true;
+                document.getElementById('confirmBtn').textContent = "Procesando...";
+
+                // Recolectar datos después de la validación
                 const name = document.getElementById('fullName').value.trim();
                 const id = document.getElementById('idNumber').value.trim();
                 const countryCode = document.getElementById('countryCode').value;
@@ -311,16 +323,7 @@
                 const phone = `+${countryCode}${phoneOnly}`;
                 const email = document.getElementById('email').value.trim();
                 const reference = document.getElementById('referenceNumber').value.trim();
-                const fileInput = document.getElementById('fileInput');
-
-                if (!name || !id || !phoneOnly || !reference || !selectedPaymentMethod || fileInput.files.length === 0) {
-                    alert("Por favor, completa todos los campos marcados con * y sube el comprobante.");
-                    return;
-                }
-
-                document.getElementById('confirmBtn').disabled = true;
-                document.getElementById('confirmBtn').textContent = "Procesando...";
-
+                
                 const saveResult = await saveData(name, id, phone, email, numTickets, selectedPaymentMethod, reference);
                 
                 if (saveResult.success) {
@@ -332,6 +335,61 @@
                 }
             });
         });
+
+        // NUEVA FUNCIÓN DE VALIDACIÓN
+        function validateForm() {
+            // Resetear estilos de error previos
+            const fieldsToValidate = document.querySelectorAll('input[required], .upload-area');
+            fieldsToValidate.forEach(field => field.classList.remove('input-error'));
+            
+            const fullName = document.getElementById('fullName');
+            if (fullName.value.trim() === '') {
+                alert('Por favor, ingresa tu nombre y apellidos.');
+                fullName.classList.add('input-error');
+                fullName.focus();
+                return false;
+            }
+
+            const idNumber = document.getElementById('idNumber');
+            if (idNumber.value.trim() === '') {
+                alert('Por favor, ingresa tu cédula o RUT.');
+                idNumber.classList.add('input-error');
+                idNumber.focus();
+                return false;
+            }
+
+            const phoneNumber = document.getElementById('phoneNumber');
+            if (phoneNumber.value.trim() === '') {
+                alert('Por favor, ingresa tu número de teléfono.');
+                phoneNumber.classList.add('input-error');
+                phoneNumber.focus();
+                return false;
+            }
+
+            if (selectedPaymentMethod === '') {
+                alert('Por favor, selecciona un método de pago.');
+                return false;
+            }
+
+            const referenceNumber = document.getElementById('referenceNumber');
+            if (referenceNumber.value.trim() === '') {
+                alert('Por favor, ingresa el número de referencia del pago.');
+                referenceNumber.classList.add('input-error');
+                referenceNumber.focus();
+                return false;
+            }
+            
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.querySelector('.upload-area');
+            if (fileInput.files.length === 0) {
+                alert('Por favor, sube una foto o captura del comprobante de pago.');
+                uploadArea.classList.add('input-error');
+                return false;
+            }
+
+            return true; // Si todo está bien
+        }
+
 
         function initializePage() {
             document.title = CONFIG.raffleName;
@@ -381,6 +439,7 @@
             if (fileInput.files.length > 0) {
                 fileNameDisplay.textContent = fileInput.files[0].name;
                 fileNameDisplay.style.color = 'var(--accent-color)';
+                 document.querySelector('.upload-area').classList.remove('input-error');
             } else {
                 fileNameDisplay.textContent = "Foto o Captura de Pantalla * (Haz clic para subir)";
                 fileNameDisplay.style.color = 'var(--text-muted)';
@@ -456,7 +515,7 @@
 
         function displayTicketResults(transaction, allTickets, searchedTicket) {
             const resultsContainer = document.getElementById('resultsContainer');
-            const date = new Date(transaction.created_at); // Corrected to use 'created_at' if that's the column name in Supabase
+            const date = new Date(transaction.created_at);
             const formattedDate = date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
             resultsContainer.innerHTML = `
                 <div class="ticket-details">
