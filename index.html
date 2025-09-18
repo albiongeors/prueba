@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>RIFA PREMIUM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary-dark: #111B21; --primary-light: #2A3942; --container-bg: #2A3942;
+            --accent-color: #00A884; --text-light: #E9EDEF; --text-muted: #8696A0;
+            --border-color: rgba(134, 150, 160, 0.15); --border-radius: 12px;
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--primary-dark); color: var(--text-light); line-height: 1.6; padding: 10px; min-height: 100vh; }
+        .navbar { max-width: 600px; margin: 0 auto 20px auto; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: var(--container-bg); border-radius: var(--border-radius); border: 1px solid var(--border-color); }
+        .navbar-logo img { max-height: 40px; }
+        .hamburger-menu { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 2px solid var(--text-muted); border-radius: 8px; cursor: pointer; transition: var(--transition); }
+        .hamburger-menu:hover { border-color: var(--text-light); }
+        .hamburger-menu i { font-size: 22px; color: var(--text-muted); transition: var(--transition); }
+        .hamburger-menu:hover i { color: var(--text-light); }
+        .mobile-menu-overlay { position: fixed; top: 0; right: -100%; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 2000; display: flex; align-items: center; justify-content: center; transition: right 0.5s ease-in-out; }
+        .mobile-menu-overlay.open { right: 0; }
+        .mobile-menu-close { position: absolute; top: 20px; right: 20px; font-size: 30px; color: var(--text-light); cursor: pointer; }
+        .mobile-menu-links { list-style: none; padding: 0; text-align: center; }
+        .mobile-menu-links li a { color: var(--text-light); text-decoration: none; font-size: 1.8rem; font-weight: 600; display: block; padding: 15px; transition: color 0.3s; }
+        .mobile-menu-links li a:hover { color: var(--accent-color); }
+        .container { max-width: 600px; margin: 0 auto; background: var(--container-bg); border-radius: var(--border-radius); box-shadow: var(--shadow); border: 1px solid var(--border-color); overflow: hidden; }
+        .main-content { padding: 25px; }
+        .section-title { display: flex; align-items: center; color: var(--text-light); margin: 40px 0 25px 0; font-size: 1.2rem; }
+        .section-title span { display: flex; align-items: center; gap: 10px; }
+        .section-title::after { content: ''; flex: 1; margin-left: 1em; height: 1px; background: linear-gradient(to right, var(--accent-color), transparent); opacity: 0.5; }
+        .section-title-icon { width: 24px; height: 24px; }
+        .prize-section { text-align: center; margin-bottom: 30px; }
+        .prize-image { max-width: 100%; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); margin-bottom: 20px; }
+        #prize-description { font-size: 1rem; color: var(--text-light); font-weight: 400; padding: 10px; }
+        .ticket-quantity-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
+        .ticket-quantity-selector .quantity-option { background-color: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: var(--text-light); border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 12px 0; text-align: center; font-size: 1.1rem; font-weight: 500; cursor: pointer; transition: var(--transition); }
+        .ticket-quantity-selector .quantity-option.selected { border-color: var(--accent-color); background: var(--accent-color); color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0, 168, 132, 0.3); }
+        .ticket-counter { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 20px; margin-bottom: 25px; }
+        .ticket-counter button { background-color: var(--accent-color); color: var(--primary-dark); border:none; border-radius: 50%; width: 45px; height: 45px; font-size: 1.8rem; cursor: pointer; transition: var(--transition); }
+        .ticket-counter input { background: transparent; border: 2px solid var(--accent-color); color: var(--text-light); width: 80px; text-align: center; font-size: 1.5rem; font-weight: 600; border-radius: 8px; padding: 5px; }
+        .total-amount-display { background: var(--accent-color); color: white; padding: 12px 20px; text-align: center; border-radius: var(--border-radius); margin-bottom: 30px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 5px 15px rgba(0, 168, 132, 0.3); }
+        .total-amount-display .label { font-size: 1rem; font-weight: 400; }
+        .total-amount-display .amount { font-size: 1.6rem; font-weight: 800; }
+        label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-light); }
+        input[type="text"], input[type="tel"], input[type="email"], select { width: 100%; padding: 12px 15px; margin-bottom: 20px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 16px; transition: var(--transition); background: rgba(0,0,0,0.2); color: var(--text-light); }
+        input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, select:focus { border-color: var(--accent-color); outline: none; box-shadow: 0 0 0 4px rgba(0, 168, 132, 0.2); }
+        .phone-field { display: flex; gap: 10px; margin-bottom: 20px; }
+        .phone-field select { -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E0E0E0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; flex: 0 0 120px; margin-bottom: 0;}
+        .payment-methods { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        .payment-methods .method { background-color: white; border: 2px solid var(--border-color); border-radius: var(--border-radius); padding: 10px; display: flex; align-items: center; justify-content: center; height: 60px; width: calc(25% - 10px); min-width: 100px; cursor: pointer; transition: var(--transition); }
+        .payment-methods .method.selected { border-color: var(--accent-color); box-shadow: 0 0 15px rgba(0, 168, 132, 0.5); }
+        .payment-methods .method img { max-height: 90%; max-width: 90%; object-fit: contain; }
+        .payment-details { background: rgba(0,0,0,0.2); border-left: 4px solid var(--accent-color); border-radius: 8px; padding: 20px; margin-top: 15px; margin-bottom: 25px; }
+        .payment-details p { display: flex; justify-content: space-between; align-items: center; }
+        .payment-details strong { color: var(--text-light); }
+        .total-box-payment { background: var(--accent-color); color: var(--primary-dark); padding: 15px; text-align: center; border-radius: 8px; margin-top: 10px; font-size: 1.2rem; font-weight: bold; }
+        .upload-area { border: 2px dashed var(--border-color); border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; color: var(--text-muted); margin-bottom: 25px; transition: var(--transition); }
+        .upload-area:hover { border-color: var(--accent-color); }
+        .upload-area i { font-size: 30px; margin-bottom: 10px; }
+        .upload-area p { font-size: 0.9rem; line-height: 1.2; }
+        .btn-confirm { display: block; width: 100%; padding: 16px; border: none; border-radius: 12px; background: var(--accent-color); color: var(--primary-dark); font-size: 18px; font-weight: 600; cursor: pointer; transition: var(--transition); box-shadow: 0 5px 15px rgba(0, 168, 132, 0.3); letter-spacing: 0.5px; }
+        .btn-confirm:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 168, 132, 0.4); }
+        .btn-confirm:active { transform: translateY(0); }
+        .success-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(5px); }
+        .success-modal { background: #1f2937; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 40px; border-radius: var(--border-radius); text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.2); animation: fadeIn 0.5s ease-in-out; border: 1px solid var(--border-color); }
+        .success-icon { width: 80px; height: 80px; background-color: #25D366; border-radius: 50%; color: white; font-size: 40px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 25px; }
+        .success-modal h2 { font-size: 1.8rem; color: var(--text-light); margin-bottom: 15px; }
+        .success-modal p { color: var(--text-light); margin-bottom: 30px; max-width: 350px; }
+        .btn-whatsapp { display: inline-flex; align-items: center; gap: 10px; background-color: #25D366; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: var(--transition); }
+        .btn-whatsapp:hover { opacity: 0.9; transform: scale(1.05); }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .ticket-verification-section { margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--border-color); }
+        .search-box { display: flex; gap: 10px; margin-bottom: 20px; }
+        .search-box input { background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: var(--text-light); flex-grow: 1; padding: 15px; font-size: 1rem; border-radius: 12px; transition: var(--transition); }
+        .search-box input:focus { outline: none; box-shadow: 0 0 0 4px rgba(0, 168, 132, 0.2); }
+        .search-box button { background: var(--accent-color); color: var(--primary-dark); border: none; padding: 0 25px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: var(--transition); }
+        .search-box button:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .results-container { margin-top: 20px; }
+        .ticket-details { background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); padding: 30px; border-radius: 15px; }
+        .ticket-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .info-card { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; }
+        .info-card h3 { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px; }
+        .info-card p { color: var(--text-light); font-size: 1.1rem; font-weight: 600; word-wrap: break-word; }
+        .all-tickets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-top: 20px; }
+        .ticket-number { background: rgba(0,0,0,0.4); color: var(--text-light); padding: 10px; border-radius: 8px; text-align: center; font-weight: 600; font-family: monospace; }
+        .ticket-number.highlight { background: var(--accent-color); color: var(--primary-dark); transform: scale(1.1); box-shadow: 0 0 15px rgba(0, 168, 132, 0.5);}
+        .copy-icon { cursor: pointer; color: var(--text-muted); transition: color 0.3s; padding: 5px; }
+        .copy-icon:hover { color: var(--accent-color); }
+        
+        @media (max-width: 480px) {
+            body { padding: 5px; }
+            .navbar { padding: 10px 15px; }
+            .main-content { padding: 20px; }
+            .section-title { font-size: 1.1rem; }
+            .payment-methods { justify-content: space-around; }
+            .payment-methods .method { height: 50px; min-width: 80px; }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="navbar">
+        <div class="navbar-logo">
+            <img src="https://i.ibb.co/L8yP7c2/logo-ejemplo.png" alt="Logo de la Rifa">
+        </div>
+        <div class="hamburger-menu" id="hamburger-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+
+    <div class="mobile-menu-overlay" id="mobile-menu">
+        <div class="mobile-menu-close" id="close-icon">&times;</div>
+        <ul class="mobile-menu-links">
+            <li><a href="#" id="link-inicio">Inicio</a></li>
+            <li><a href="#ticket-verification-section" id="link-verificador">Verificador</a></li>
+            <li><a href="#" id="link-soporte">Soporte</a></li>
+        </ul>
+    </div>
+    
+    <div class="container">
+        <div class="main-content">
+            <h2 class="section-title"><span><img src="https://i.ibb.co/L6V2MhN/trophy-icon.png" class="section-title-icon" alt="Premio"> Nuestro Gran Premio</span></h2>
+            <div id="prize-section" class="prize-section">
+                <img id="prize-image" src="" alt="Premio de la Rifa" class="prize-image">
+                <p id="prize-description"></p>
+            </div>
+
+            <h2 class="section-title"><span><img src="https://i.ibb.co/S076xG2/tickgreen.png" class="section-title-icon" alt="Boletos"> Elige tus Boletos</span></h2>
+            <div class="ticket-quantity-selector">
+                <div class="quantity-option" data-quantity="1">1</div>
+                <div class="quantity-option" data-quantity="2">2</div>
+                <div class="quantity-option" data-quantity="5">5</div>
+                <div class="quantity-option" data-quantity="10">10</div>
+                <div class="quantity-option" data-quantity="25">25</div>
+                <div class="quantity-option" data-quantity="50">50</div>
+            </div>
+            <div class="ticket-counter">
+                <button id="decrementTickets">-</button>
+                <input type="number" id="numTickets" value="1" min="1" readonly>
+                <button id="incrementTickets">+</button>
+            </div>
+            <div class="total-amount-display">
+                <span class="label">Total a Pagar:</span>
+                <span class="amount">$ <span id="totalAmount">0.00</span> USD</span>
+            </div>
+
+            <h2 class="section-title"><span><img src="https://i.ibb.co/GvxYv10/user-icon.png" class="section-title-icon" alt="Usuario"> Datos Personales</span></h2>
+            <label for="fullName">Nombres y Apellidos *</label>
+            <input type="text" id="fullName" placeholder="Ej: Carlos Troya" required>
+            
+            <label for="idNumber">Cédula de identidad / RUT *</label>
+            <input type="text" id="idNumber" placeholder="Ej: V-12345678" required>
+
+            <label for="phoneNumber">Teléfono *</label>
+            <div class="phone-field">
+                <select id="countryCode">
+                    <option value="58">🇻🇪 VEN +58</option>
+                    <option value="1">🇺🇸 USA +1</option>
+                    <option value="56">🇨🇱 CHI +56</option>
+                </select>
+                <input type="tel" id="phoneNumber" placeholder="412 123 4567" required>
+            </div>
+
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" placeholder="Ej: usuario@ejemplo.com">
+
+            <h2 class="section-title"><span><img src="https://i.ibb.co/vLYV3Bv/wallet-icon.png" class="section-title-icon" alt="Pagos"> Modos de Pago</span></h2>
+             <div class="payment-methods">
+                <div class="method" data-metodo="paypal"><img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" alt="PayPal"></div>
+                <div class="method" data-metodo="binance"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Binance-coin-bnb-logo.png" alt="Binance"></div>
+                <div class="method" data-metodo="zelle"><img src="https://www.zellepay.com/sites/all/themes/zelle/images/zelle-logo-white-horizontal.svg" alt="Zelle"></div>
+                <div class="method" data-metodo="mobile"><img src="https://i.ibb.co/Yh2s18T/pago-movil-1.png" alt="Pago Móvil"></div>
+            </div>
+            <div id="paypalDetails" class="payment-details" style="display:none;">
+                <h3>Datos para PayPal</h3>
+                <p><strong>Correo:</strong> <span class="copyable-text">TU_CORREO_PAYPAL@email.com</span> <i class="far fa-copy copy-icon" title="Copiar"></i></p>
+                <div class="total-box-payment">Total a Pagar: $<span class="total-amount-payment-display">0.00</span> USD</div>
+            </div>
+            <div id="binanceDetails" class="payment-details" style="display:none;">
+                <h3>Datos para Binance</h3>
+                <p><strong>ID:</strong> <span class="copyable-text">TU_ID_DE_BINANCE</span> <i class="far fa-copy copy-icon" title="Copiar"></i></p>
+                <div class="total-box-payment">Total a Pagar: $<span class="total-amount-payment-display">0.00</span> USD</div>
+            </div>
+            <div id="zelleDetails" class="payment-details" style="display:none;">
+                <h3>Datos para Zelle</h3>
+                <p><strong>Correo:</strong> <span class="copyable-text">TU_CORREO_ZELLE@email.com</span> <i class="far fa-copy copy-icon" title="Copiar"></i></p>
+                <div class="total-box-payment">Total a Pagar: $<span class="total-amount-payment-display">0.00</span> USD</div>
+            </div>
+            <div id="mobileDetails" class="payment-details" style="display:none;">
+                <h3>Datos para Pago Móvil</h3>
+                <p><strong>Banco:</strong> <span class="copyable-text">BANCO DE VENEZUELA</span> <i class="far fa-copy copy-icon" title="Copiar"></i></p>
+                <p><strong>Teléfono:</strong> <span class="copyable-text">04121234567</span> <i class="far fa-copy copy-icon" title="Copiar"></i></p>
+                <div class="total-box-payment">Total: $<span class="total-amount-payment-display">0.00</span> USD / <span class="total-amount-payment-display-bs">0.00</span> Bs.</div>
+            </div>
+
+            <h2 class="section-title"><span><img src="https://i.ibb.co/2Zk3L5B/receipt-icon.png" class="section-title-icon" alt="Comprobante"> Comprobante de Pago</span></h2>
+            <label for="referenceNumber">Número de Referencia *</label>
+            <input type="text" id="referenceNumber" placeholder="Últimos 6-8 dígitos del comprobante" required>
+            <div class="upload-area" onclick="document.getElementById('fileInput').click();">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p id="fileName">Foto o Captura de Pantalla * (Haz clic para subir)</p>
+            </div>
+            <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="updateFileName()">
+
+            <button id="confirmBtn" class="btn-confirm">CONFIRMAR PAGO</button>
+
+            <div class="ticket-verification-section" id="ticket-verification-section">
+                <h2 class="section-title"><span><img src="https://i.ibb.co/b3c5PXT/search-icon.png" class="section-title-icon" alt="Verificar"> Verifica tus Boletos</span></h2>
+                <div class="search-box">
+                    <input type="text" id="ticketSearchInput" placeholder="Ingresa tu número de boleto (ej: 00123)">
+                    <button onclick="searchTicket()"><i class="fas fa-search"></i> Buscar</button>
+                </div>
+                <div id="resultsContainer" class="results-container"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="success-overlay" class="success-overlay">
+        <div class="success-modal">
+            <div class="success-icon"><i class="fas fa-check"></i></div>
+            <h2>¡Gracias por tu compra!</h2>
+            <p>Hemos registrado tus datos. El último paso es enviar tu comprobante. Serás redirigido a WhatsApp, por favor **adjunta tu comprobante de pago en el chat** y envía el mensaje.</p>
+            <a href="#" id="goToWhatsAppBtn" class="btn-whatsapp" target="_blank">
+                <i class="fab fa-whatsapp"></i> Ir a WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const CONFIG = {
+            raffleName: "RIFA PRUEBA™",
+            prizeImageURL: "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg",
+            prizeDescription: "Gánate este increíble carro <strong>BMW Serie 3 2025</strong> full equipo.",
+            ticketPriceUSD: 2.00, 
+            exchangeRateBS: 36.5, 
+            adminWhatsApp: "584127430912",
+            supabaseUrl: "https://khzyrpacignaikaonxdh.supabase.co",
+            supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoenlycGFjaWduYWlrYW9ueGRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3NzYzNTksImV4cCI6MjA3MzM1MjM1OX0.0Z1i6WG0V4hJQ1eFtcKxZpmDPi-_5KCogm7xAWVlmfQ"
+        };
+        
+        let numTickets = 1;
+        let selectedPaymentMethod = '';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializePage();
+            updateTotalAmount();
+            enableCopyToClipboard();
+            
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeIcon = document.getElementById('close-icon');
+            const menuLinks = document.querySelectorAll('.mobile-menu-links a');
+            
+            const toggleMenu = () => mobileMenu.classList.toggle('open');
+
+            hamburgerIcon.addEventListener('click', toggleMenu);
+            closeIcon.addEventListener('click', toggleMenu);
+            menuLinks.forEach(link => {
+                if (link.id !== 'link-soporte') {
+                    link.addEventListener('click', toggleMenu);
+                }
+            });
+            
+            document.getElementById('link-soporte').href = `https://wa.me/${CONFIG.adminWhatsApp}?text=${encodeURIComponent('Hola, necesito soporte con la rifa.')}`;
+            
+            const quantityOptions = document.querySelectorAll('.ticket-quantity-selector .quantity-option');
+            quantityOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    quantityOptions.forEach(o => o.classList.remove('selected'));
+                    this.classList.add('selected');
+                    numTickets = parseInt(this.getAttribute('data-quantity'));
+                    document.getElementById('numTickets').value = numTickets;
+                    updateTotalAmount();
+                });
+            });
+
+            document.getElementById('incrementTickets').addEventListener('click', () => { numTickets++; updateTotalInputAndAmount(); });
+            document.getElementById('decrementTickets').addEventListener('click', () => { if (numTickets > 1) { numTickets--; updateTotalInputAndAmount(); } });
+
+            document.getElementById('numTickets').addEventListener('change', function() {
+                let val = parseInt(this.value);
+                if (isNaN(val) || val < 1) val = 1;
+                numTickets = val;
+                updateTotalInputAndAmount();
+            });
+
+            const paymentMethods = document.querySelectorAll('.payment-methods .method');
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    paymentMethods.forEach(m => m.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const metodo = this.getAttribute('data-metodo');
+                    selectedPaymentMethod = metodo.charAt(0).toUpperCase() + metodo.slice(1);
+                    document.querySelectorAll('.payment-details').forEach(div => div.style.display = 'none');
+                    document.getElementById(metodo + 'Details').style.display = 'block';
+                    updateTotalAmount(); 
+                });
+            });
+
+            document.getElementById('confirmBtn').addEventListener('click', async () => {
+                const name = document.getElementById('fullName').value.trim();
+                const id = document.getElementById('idNumber').value.trim();
+                const countryCode = document.getElementById('countryCode').value;
+                const phoneOnly = document.getElementById('phoneNumber').value.trim();
+                const phone = `+${countryCode}${phoneOnly}`;
+                const email = document.getElementById('email').value.trim();
+                const reference = document.getElementById('referenceNumber').value.trim();
+                const fileInput = document.getElementById('fileInput');
+
+                if (!name || !id || !phoneOnly || !reference || !selectedPaymentMethod || fileInput.files.length === 0) {
+                    alert("Por favor, completa todos los campos marcados con * y sube el comprobante.");
+                    return;
+                }
+
+                document.getElementById('confirmBtn').disabled = true;
+                document.getElementById('confirmBtn').textContent = "Procesando...";
+
+                const saveResult = await saveData(name, id, phone, email, numTickets, selectedPaymentMethod, reference);
+                
+                if (saveResult.success) {
+                    showSuccessScreen(saveResult.transactionId);
+                } else {
+                    alert(`Hubo un error al guardar tu información: ${saveResult.error}. Inténtalo de nuevo.`);
+                    document.getElementById('confirmBtn').disabled = false;
+                    document.getElementById('confirmBtn').textContent = "CONFIRMAR PAGO";
+                }
+            });
+        });
+
+        function initializePage() {
+            document.title = CONFIG.raffleName;
+            document.getElementById('prize-image').src = CONFIG.prizeImageURL;
+            document.getElementById('prize-description').innerHTML = CONFIG.prizeDescription;
+        }
+
+        function enableCopyToClipboard() {
+            document.querySelectorAll('.copy-icon').forEach(icon => {
+                icon.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const textToCopy = icon.previousElementSibling.textContent;
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const originalIconClass = icon.className;
+                        icon.className = 'fas fa-check copy-icon';
+                        icon.style.color = 'var(--accent-color)';
+                        setTimeout(() => {
+                            icon.className = originalIconClass;
+                            icon.style.color = '';
+                        }, 1500);
+                    });
+                });
+            });
+        }
+
+        function updateTotalInputAndAmount() {
+            document.getElementById('numTickets').value = numTickets;
+            updateTotalAmount();
+            document.querySelectorAll('.ticket-quantity-selector .quantity-option').forEach(o => o.classList.remove('selected'));
+        }
+
+        function updateTotalAmount() {
+            const totalUSD = numTickets * CONFIG.ticketPriceUSD;
+            const totalBS = totalUSD * CONFIG.exchangeRateBS;
+            document.getElementById('totalAmount').textContent = totalUSD.toFixed(2);
+            updatePaymentDetailsTotal(totalUSD, totalBS);
+        }
+
+        function updatePaymentDetailsTotal(totalUSD, totalBS) {
+            document.querySelectorAll('.total-amount-payment-display').forEach(span => span.textContent = totalUSD.toFixed(2));
+            document.querySelectorAll('.total-amount-payment-display-bs').forEach(span => span.textContent = totalBS.toFixed(2));
+        }
+
+        function updateFileName() {
+            const fileInput = document.getElementById('fileInput');
+            const fileNameDisplay = document.getElementById('fileName');
+            if (fileInput.files.length > 0) {
+                fileNameDisplay.textContent = fileInput.files[0].name;
+                fileNameDisplay.style.color = 'var(--accent-color)';
+            } else {
+                fileNameDisplay.textContent = "Foto o Captura de Pantalla * (Haz clic para subir)";
+                fileNameDisplay.style.color = 'var(--text-muted)';
+            }
+        }
+
+        async function saveData(name, id_number, phone, email, tickets, payment_method, reference) {
+            const data = { name, id_number, phone, email: email || null, tickets, payment_method, reference, status: "PENDIENTE" };
+            try {
+                const response = await fetch(`${CONFIG.supabaseUrl}/rest/v1/transactions?select=id`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'apikey': CONFIG.supabaseKey, 'Authorization': `Bearer ${CONFIG.supabaseKey}`, 'Prefer': 'return=representation' },
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    const responseData = await response.json();
+                    return { success: true, transactionId: responseData[0].id };
+                } else {
+                    const errorData = await response.json();
+                    return { success: false, error: errorData.message || "Error desconocido" };
+                }
+            } catch (error) { return { success: false, error: error.message }; }
+        }
+        
+        function showSuccessScreen(transactionId) {
+            const overlay = document.getElementById('success-overlay');
+            const whatsappBtn = document.getElementById('goToWhatsAppBtn');
+            whatsappBtn.href = generateWhatsAppLink(transactionId);
+            overlay.style.display = 'flex';
+            whatsappBtn.addEventListener('click', () => {
+                setTimeout(() => { window.location.reload(); }, 1000);
+            });
+        }
+        
+        function generateWhatsAppLink(transactionId) {
+            const phone = `+${document.getElementById('countryCode').value}${document.getElementById('phoneNumber').value.trim()}`;
+            const name = document.getElementById('fullName').value;
+            const id = document.getElementById('idNumber').value;
+            const reference = document.getElementById('referenceNumber').value;
+            const totalUSD = (numTickets * CONFIG.ticketPriceUSD).toFixed(2);
+            const message = encodeURIComponent(`*NUEVO PAGO REPORTADO - ${CONFIG.raffleName}*\n\n*Nº de Transacción:* ${transactionId}\n-----------------------------------\n*Cliente:* ${name}\n*Cédula/RUT:* ${id}\n*Teléfono:* ${phone}\n*Referencia:* ${reference}\n*Boletos:* ${numTickets}\n*Monto:* $${totalUSD} USD\n*Método:* ${selectedPaymentMethod}\n\n_A continuación adjunto mi comprobante de pago._`);
+            return `https://wa.me/${CONFIG.adminWhatsApp}?text=${message}`;
+        }
+
+        async function searchTicket() {
+            const resultsContainer = document.getElementById('resultsContainer');
+            const ticketNumberInput = document.getElementById('ticketSearchInput').value;
+            const ticketNumber = parseInt(ticketNumberInput);
+            if (isNaN(ticketNumber) || ticketNumberInput.trim() === '') {
+                resultsContainer.innerHTML = `<p style="text-align:center;">Por favor, ingresa un número de boleto válido.</p>`;
+                return;
+            }
+            resultsContainer.innerHTML = `<p style="text-align:center;">Buscando...</p>`;
+            try {
+                const ticketResponse = await fetch(`${CONFIG.supabaseUrl}/rest/v1/tickets?ticket_number=eq.${ticketNumber}&select=*,transactions(*)`, { headers: { 'apikey': CONFIG.supabaseKey, 'Authorization': `Bearer ${CONFIG.supabaseKey}` }});
+                if (!ticketResponse.ok) throw new Error('Error de conexión.');
+                const ticketData = await ticketResponse.json();
+                if (ticketData.length === 0) {
+                    resultsContainer.innerHTML = `<p style="text-align:center;">No se encontró el boleto <strong>#${String(ticketNumber).padStart(5, '0')}</strong>.</p>`;
+                    return;
+                }
+                const transaction = ticketData[0].transactions;
+                if (!transaction) throw new Error('No se encontró la transacción asociada.');
+                const allTicketsResponse = await fetch(`${CONFIG.supabaseUrl}/rest/v1/tickets?transaction_id=eq.${transaction.id}&select=ticket_number`, { headers: { 'apikey': CONFIG.supabaseKey, 'Authorization': `Bearer ${CONFIG.supabaseKey}` }});
+                if (!allTicketsResponse.ok) throw new Error("Error al buscar los demás boletos.");
+                const allTicketsData = await allTicketsResponse.json();
+                displayTicketResults(transaction, allTicketsData, ticketNumber);
+            } catch (error) {
+                console.error("Error en la búsqueda:", error);
+                resultsContainer.innerHTML = `<p style="text-align:center;">Ocurrió un error en la búsqueda.</p>`;
+            }
+        }
+
+        function displayTicketResults(transaction, allTickets, searchedTicket) {
+            const resultsContainer = document.getElementById('resultsContainer');
+            const date = new Date(transaction.created_at); // Corrected to use 'created_at' if that's the column name in Supabase
+            const formattedDate = date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+            resultsContainer.innerHTML = `
+                <div class="ticket-details">
+                    <h2 style="text-align:center; margin-bottom: 20px;">Detalles de la Compra</h2>
+                    <div class="ticket-info-grid">
+                        <div class="info-card"><h3>Comprador</h3><p>${transaction.name}</p></div>
+                        <div class="info-card"><h3>Cédula / RUT</h3><p>${transaction.id_number}</p></div>
+                        <div class="info-card"><h3>Teléfono</h3><p>${transaction.phone}</p></div>
+                        <div class="info-card"><h3>Fecha de Compra</h3><p>${formattedDate}</p></div>
+                    </div>
+                    <h3 style="margin-top: 30px;">Tus Boletos (${allTickets.length})</h3>
+                    <div class="all-tickets-grid">
+                        ${allTickets.sort((a, b) => a.ticket_number - b.ticket_number).map(ticket => `
+                            <div class="ticket-number ${ticket.ticket_number === searchedTicket ? 'highlight' : ''}">
+                                ${String(ticket.ticket_number).padStart(5, '0')}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
