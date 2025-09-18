@@ -13,7 +13,7 @@
             --border-color: rgba(134, 150, 160, 0.15); --border-radius: 12px;
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --error-color: #e53e3e; /* Color para errores de validación */
+            --error-color: #e53e3e; 
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
         html { scroll-behavior: smooth; }
@@ -35,7 +35,8 @@
         .section-title { display: flex; align-items: center; color: var(--text-light); margin: 40px 0 25px 0; font-size: 1.2rem; }
         .section-title span { display: flex; align-items: center; gap: 10px; }
         .section-title::after { content: ''; flex: 1; margin-left: 1em; height: 1px; background: linear-gradient(to right, var(--accent-color), transparent); opacity: 0.5; }
-        .section-title-icon { width: 24px; height: 24px; }
+        /* CSS ACTUALIZADO PARA SVG */
+        .section-title-icon { width: 24px; height: 24px; color: var(--accent-color); }
         .prize-section { text-align: center; margin-bottom: 30px; }
         .prize-image { max-width: 100%; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); margin-bottom: 20px; }
         #prize-description { font-size: 1rem; color: var(--text-light); font-weight: 400; padding: 10px; }
@@ -51,7 +52,6 @@
         label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-light); }
         input[type="text"], input[type="tel"], input[type="email"], select { width: 100%; padding: 12px 15px; margin-bottom: 20px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 16px; transition: var(--transition); background: rgba(0,0,0,0.2); color: var(--text-light); }
         input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, select:focus { border-color: var(--accent-color); outline: none; box-shadow: 0 0 0 4px rgba(0, 168, 132, 0.2); }
-        /* NUEVO: Estilo para campos con error */
         .input-error { border-color: var(--error-color) !important; box-shadow: 0 0 0 4px rgba(229, 62, 62, 0.2) !important; }
         .phone-field { display: flex; gap: 10px; margin-bottom: 20px; }
         .phone-field select { -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E0E0E0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; flex: 0 0 120px; margin-bottom: 0;}
@@ -113,7 +113,7 @@
             <img src="https://i.ibb.co/L8yP7c2/logo-ejemplo.png" alt="Logo de la Rifa">
         </div>
         <div class="hamburger-menu" id="hamburger-icon">
-            <i class="fas fa-bars"></i>
+            <i class="fas fa-grip-lines"></i>
         </div>
     </div>
 
@@ -128,13 +128,13 @@
     
     <div class="container">
         <div class="main-content">
-            <h2 class="section-title"><span><img src="https://i.ibb.co/L6V2MhN/trophy-icon.png" class="section-title-icon" alt="Premio"> Nuestro Gran Premio</span></h2>
+            <h2 class="section-title"><span><svg class="section-title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor"><path d="M552 64H448V48C448 21.5 426.5 0 400 0H176c-26.5 0-48 21.5-48 48v16H24C10.7 64 0 74.7 0 88v32c0 13.3 10.7 24 24 24H64v288c0 22.1 17.9 40 40 40h368c22.1 0 40-17.9 40-40V144h40c13.3 0 24-10.7 24-24V88c0-13.3-10.7-24-24-24zM176 144h224v64H176V144z"/></svg> Nuestro Gran Premio</span></h2>
             <div id="prize-section" class="prize-section">
                 <img id="prize-image" src="" alt="Premio de la Rifa" class="prize-image">
                 <p id="prize-description"></p>
             </div>
 
-            <h2 class="section-title"><span><img src="https://i.ibb.co/S076xG2/tickgreen.png" class="section-title-icon" alt="Boletos"> Elige tus Boletos</span></h2>
+            <h2 class="section-title"><span><svg class="section-title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor"><path d="M128 160h320v192H128V160zM576 96H0v320h576V96zM128 0C110.3 0 96 14.3 96 32v32h384V32c0-17.7-14.3-32-32-32H128zM96 448v32c0 17.7 14.3 32 32 32h320c17.7 0 32-14.3 32-32v-32H96z"/></svg> Elige tus Boletos</span></h2>
             <div class="ticket-quantity-selector">
                 <div class="quantity-option" data-quantity="1">1</div>
                 <div class="quantity-option" data-quantity="2">2</div>
@@ -153,7 +153,7 @@
                 <span class="amount">$ <span id="totalAmount">0.00</span> USD</span>
             </div>
 
-            <h2 class="section-title"><span><img src="https://i.ibb.co/GvxYv10/user-icon.png" class="section-title-icon" alt="Usuario"> Datos Personales</span></h2>
+            <h2 class="section-title"><span><svg class="section-title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3 0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg> Datos Personales</span></h2>
             <label for="fullName">Nombres y Apellidos *</label>
             <input type="text" id="fullName" placeholder="Ej: Carlos Troya" required>
             
@@ -173,7 +173,7 @@
             <label for="email">Correo electrónico</label>
             <input type="email" id="email" placeholder="Ej: usuario@ejemplo.com">
 
-            <h2 class="section-title"><span><img src="https://i.ibb.co/vLYV3Bv/wallet-icon.png" class="section-title-icon" alt="Pagos"> Modos de Pago</span></h2>
+            <h2 class="section-title"><span><svg class="section-title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM392 288c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z"/></svg> Modos de Pago</span></h2>
              <div class="payment-methods">
                 <div class="method" data-metodo="paypal"><img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" alt="PayPal"></div>
                 <div class="method" data-metodo="binance"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Binance-coin-bnb-logo.png" alt="Binance"></div>
@@ -182,31 +182,31 @@
             </div>
             <div id="paypalDetails" class="payment-details" style="display:none;">
                 <h3>Datos para PayPal</h3>
-                <p><strong>Correo:</strong> <span class="copyable-text">TU_CORREO_PAYPAL@email.com</span> <i class="far fa-copy copy-icon" title="Copiar"></i></p>
+                <p><strong>Correo:</strong> <span class="copyable-text">TU_CORREO_PAYPAL@email.com</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
                 <div class="total-box-payment">Total a Pagar: $<span class="total-amount-payment-display">0.00</span> USD</div>
             </div>
             <div id="binanceDetails" class="payment-details" style="display:none;">
                 <h3>Datos para Binance</h3>
-                <p><strong>ID:</strong> <span class="copyable-text">TU_ID_DE_BINANCE</span> <i class="far fa-copy copy-icon" title="Copiar"></i></p>
+                <p><strong>ID:</strong> <span class="copyable-text">TU_ID_DE_BINANCE</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
                 <div class="total-box-payment">Total a Pagar: $<span class="total-amount-payment-display">0.00</span> USD</div>
             </div>
             <div id="zelleDetails" class="payment-details" style="display:none;">
                 <h3>Datos para Zelle</h3>
-                <p><strong>Correo:</strong> <span class="copyable-text">TU_CORREO_ZELLE@email.com</span> <i class="far fa-copy copy-icon" title="Copiar"></i></p>
+                <p><strong>Correo:</strong> <span class="copyable-text">TU_CORREO_ZELLE@email.com</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
                 <div class="total-box-payment">Total a Pagar: $<span class="total-amount-payment-display">0.00</span> USD</div>
             </div>
             <div id="mobileDetails" class="payment-details" style="display:none;">
                 <h3>Datos para Pago Móvil</h3>
-                <p><strong>Banco:</strong> <span class="copyable-text">BANCO DE VENEZUELA</span> <i class="far fa-copy copy-icon" title="Copiar"></i></p>
-                <p><strong>Teléfono:</strong> <span class="copyable-text">04121234567</span> <i class="far fa-copy copy-icon" title="Copiar"></i></p>
+                <p><strong>Banco:</strong> <span class="copyable-text">BANCO DE VENEZUELA</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
+                <p><strong>Teléfono:</strong> <span class="copyable-text">04121234567</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
                 <div class="total-box-payment">Total: $<span class="total-amount-payment-display">0.00</span> USD / <span class="total-amount-payment-display-bs">0.00</span> Bs.</div>
             </div>
 
-            <h2 class="section-title"><span><img src="https://i.ibb.co/2Zk3L5B/receipt-icon.png" class="section-title-icon" alt="Comprobante"> Comprobante de Pago</span></h2>
+            <h2 class="section-title"><span><svg class="section-title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" fill="currentColor"><path d="M374.6 342.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 402.7V32c0-17.7-14.3-32-32-32s-32 14.3-32 32v370.7L54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0l160-160z"/></svg> Comprobante de Pago</span></h2>
             <label for="referenceNumber">Número de Referencia *</label>
             <input type="text" id="referenceNumber" placeholder="Últimos 6-8 dígitos del comprobante" required>
             <div class="upload-area" onclick="document.getElementById('fileInput').click();">
-                <i class="fas fa-cloud-upload-alt"></i>
+                <i class="fas fa-arrow-up-from-bracket"></i>
                 <p id="fileName">Foto o Captura de Pantalla * (Haz clic para subir)</p>
             </div>
             <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="updateFileName()">
@@ -214,10 +214,10 @@
             <button id="confirmBtn" class="btn-confirm">CONFIRMAR PAGO</button>
 
             <div class="ticket-verification-section" id="ticket-verification-section">
-                <h2 class="section-title"><span><img src="https://i.ibb.co/b3c5PXT/search-icon.png" class="section-title-icon" alt="Verificar"> Verifica tus Boletos</span></h2>
+                <h2 class="section-title"><span><svg class="section-title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M432 0H80C35.8 0 0 35.8 0 80v352c0 44.2 35.8 80 80 80h352c44.2 0 80-35.8 80-80V80c0-44.2-35.8-80-80-80zM208 384c-8.8 0-16-7.2-16-16s7.2-16 16-16h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H208zm0-96c-8.8 0-16-7.2-16-16s7.2-16 16-16h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H208zm-48-64c0 17.7-14.3 32-32 32s-32-14.3-32-32 14.3-32 32-32 32 14.3 32 32zm-16 64c-8.8 0-16-7.2-16-16s7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32zm-32 80c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg> Verifica tus Boletos</span></h2>
                 <div class="search-box">
                     <input type="text" id="ticketSearchInput" placeholder="Ingresa tu número de boleto (ej: 00123)">
-                    <button onclick="searchTicket()"><i class="fas fa-search"></i> Buscar</button>
+                    <button onclick="searchTicket()"><i class="fas fa-magnifying-glass"></i> Buscar</button>
                 </div>
                 <div id="resultsContainer" class="results-container"></div>
             </div>
@@ -226,7 +226,7 @@
     
     <div id="success-overlay" class="success-overlay">
         <div class="success-modal">
-            <div class="success-icon"><i class="fas fa-check"></i></div>
+            <div class="success-icon"><i class="fas fa-circle-check"></i></div>
             <h2>¡Gracias por tu compra!</h2>
             <p>Hemos registrado tus datos. El último paso es enviar tu comprobante. Serás redirigido a WhatsApp, por favor **adjunta tu comprobante de pago en el chat** y envía el mensaje.</p>
             <a href="#" id="goToWhatsAppBtn" class="btn-whatsapp" target="_blank">
@@ -236,6 +236,7 @@
     </div>
 
     <script>
+        // El código JavaScript no necesita cambios para esta actualización y permanece igual.
         const CONFIG = {
             raffleName: "RIFA PRUEBA™",
             prizeImageURL: "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg",
@@ -307,15 +308,13 @@
             });
 
             document.getElementById('confirmBtn').addEventListener('click', async () => {
-                // VALIDACIÓN AÑADIDA
                 if (!validateForm()) {
-                    return; // Detiene la ejecución si el formulario no es válido
+                    return; 
                 }
 
                 document.getElementById('confirmBtn').disabled = true;
                 document.getElementById('confirmBtn').textContent = "Procesando...";
 
-                // Recolectar datos después de la validación
                 const name = document.getElementById('fullName').value.trim();
                 const id = document.getElementById('idNumber').value.trim();
                 const countryCode = document.getElementById('countryCode').value;
@@ -336,9 +335,7 @@
             });
         });
 
-        // NUEVA FUNCIÓN DE VALIDACIÓN
         function validateForm() {
-            // Resetear estilos de error previos
             const fieldsToValidate = document.querySelectorAll('input[required], .upload-area');
             fieldsToValidate.forEach(field => field.classList.remove('input-error'));
             
@@ -387,7 +384,7 @@
                 return false;
             }
 
-            return true; // Si todo está bien
+            return true;
         }
 
 
