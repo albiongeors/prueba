@@ -36,11 +36,11 @@
         .mobile-menu-links li a:hover { color: var(--accent-color); }
         .container { max-width: 600px; margin: 0 auto; background: var(--container-bg); border-radius: var(--border-radius); box-shadow: var(--shadow); border: 1px solid var(--border-color); overflow: hidden; }
         .main-content { padding: 25px; }
-        .section-title { display: flex; align-items: center; color: var(--text-light); margin: 25px 0 15px 0; /* Cambio aquí */ font-size: 1.2rem; }
+        .section-title { display: flex; align-items: center; color: var(--text-light); margin: 25px 0 15px 0; font-size: 1.2rem; }
         .section-title span { display: flex; align-items: center; gap: 10px; }
         .section-title::after { content: ''; flex: 1; margin-left: 1em; height: 1px; background: linear-gradient(to right, var(--accent-color), transparent); opacity: 0.5; }
         .section-title-icon { width: 24px; height: 24px; color: var(--accent-color); }
-        .prize-section { text-align: center; margin-bottom: 20px; /* Cambio aquí */ }
+        .prize-section { text-align: center; margin-bottom: 20px; }
         .prize-image { max-width: 100%; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); margin-bottom: 20px; }
         #prize-description { font-size: 1rem; color: var(--text-light); font-weight: 400; padding: 10px; }
         .ticket-quantity-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
@@ -100,52 +100,55 @@
         .copy-icon { cursor: pointer; color: var(--text-muted); transition: color 0.3s; padding: 5px; }
         .copy-icon:hover { color: var(--accent-color); }
 
-        @media (max-width: 480px) {
-            body { padding: 5px; }
-            .navbar { padding: 10px 15px; }
-            .main-content { padding: 20px; }
-            .section-title { font-size: 1.1rem; }
-            .payment-methods { justify-content: space-around; }
-            .payment-methods .method { height: 50px; min-width: 80px; }
-            .ticket-quantity-selector {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-        }
-        
-        @media (max-width: 400px) {
-            .phone-field {
-                flex-direction: column;
-                gap: 0;
-            }
-            .phone-field select {
-                margin-bottom: 20px;
-            }
-            .btn-confirm {
-                font-size: 16px;
-            }
-        }
-
         /* --- CÓDIGO DE ANIMACIÓN --- */
         @keyframes pulse {
-          0% {
-            transform: scale(1);
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-          }
-          50% {
-            transform: scale(1.15);
-            text-shadow: 0 0 20px rgba(255, 215, 0, 1);
-          }
-          100% {
-            transform: scale(1);
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-          }
+          0% { transform: scale(1); text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+          50% { transform: scale(1.15); text-shadow: 0 0 20px rgba(255, 215, 0, 1); }
+          100% { transform: scale(1); text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
         }
 
         .icon-premio-principal {
             color: #FFD700;
             font-size: 1.4rem;
             animation: pulse 2s infinite;
+        }
+
+        /* --- AJUSTES PARA MÓVILES --- */
+        @media (max-width: 480px) {
+            body { padding: 5px; }
+            .navbar { padding: 10px 15px; }
+            .main-content { padding: 15px; } /* Reducido */
+            .section-title { font-size: 1.1rem; }
+            .payment-methods { justify-content: space-around; }
+            .payment-methods .method { height: 50px; min-width: 80px; }
+            .ticket-quantity-selector {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px; /* Reducido */
+            }
+            .ticket-counter button {
+                width: 40px; /* Reducido */
+                height: 40px; /* Reducido */
+                font-size: 1.5rem; /* Reducido */
+            }
+            .phone-field {
+                flex-direction: column;
+                gap: 0;
+            }
+            .phone-field select { margin-bottom: 20px; }
+            input[type="text"], input[type="tel"], input[type="email"], select {
+                padding: 10px 12px; /* Reducido */
+                font-size: 15px; /* Reducido */
+            }
+            .btn-confirm {
+                padding: 14px; /* Reducido */
+                font-size: 16px;
+            }
+            .icon-premio-principal {
+                animation: none; /* Animación desactivada para mejorar rendimiento */
+            }
+            .upload-area {
+                padding: 20px; /* Reducido */
+            }
         }
     </style>
 </head>
@@ -587,8 +590,6 @@
     </script>
 </body>
 </html>
-
-
 
 
 
