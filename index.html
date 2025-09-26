@@ -8,12 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
     <style>
         :root {
-            --primary-dark: #111B21; --primary-light: #2A3942; --container-bg: #2A3942;
-            --accent-color: #00A884; --text-light: #E9EDEF; --text-muted: #8696A0;
-            --border-color: rgba(134, 150, 160, 0.15); --border-radius: 12px;
+            --primary-dark: #121212;
+            --container-bg: #1E1E1E;
+            --accent-color: #2ECC71;
+            --text-light: #FFFFFF;
+            --text-muted: #A0A0A0;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --border-radius: 12px;
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --error-color: #e53e3e; 
+            --error-color: #e53e3e;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
         html { scroll-behavior: smooth; }
@@ -28,36 +32,36 @@
         .mobile-menu-overlay.open { right: 0; }
         .mobile-menu-close { position: absolute; top: 20px; right: 20px; font-size: 30px; color: var(--text-light); cursor: pointer; }
         .mobile-menu-links { list-style: none; padding: 0; text-align: center; }
-        .mobile-menu-links li a { color: var(--text-light); text-decoration: none; font-size: 1.8rem; font-weight: 600; display: block; padding: 15px; transition: color 0.3s; }
+        .mobile-menu-links li a { color: var(--text-light); text-decoration: none; font-size: 1.8rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; transition: color 0.3s; }
         .mobile-menu-links li a:hover { color: var(--accent-color); }
         .container { max-width: 600px; margin: 0 auto; background: var(--container-bg); border-radius: var(--border-radius); box-shadow: var(--shadow); border: 1px solid var(--border-color); overflow: hidden; }
         .main-content { padding: 25px; }
-        .section-title { display: flex; align-items: center; color: var(--text-light); margin: 40px 0 25px 0; font-size: 1.2rem; }
+        .section-title { display: flex; align-items: center; color: var(--text-light); margin: 25px 0 15px 0; /* Cambio aquí */ font-size: 1.2rem; }
         .section-title span { display: flex; align-items: center; gap: 10px; }
         .section-title::after { content: ''; flex: 1; margin-left: 1em; height: 1px; background: linear-gradient(to right, var(--accent-color), transparent); opacity: 0.5; }
-        /* CSS ACTUALIZADO PARA SVG */
         .section-title-icon { width: 24px; height: 24px; color: var(--accent-color); }
-        .prize-section { text-align: center; margin-bottom: 30px; }
+        .prize-section { text-align: center; margin-bottom: 20px; /* Cambio aquí */ }
         .prize-image { max-width: 100%; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); margin-bottom: 20px; }
         #prize-description { font-size: 1rem; color: var(--text-light); font-weight: 400; padding: 10px; }
         .ticket-quantity-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
-        .ticket-quantity-selector .quantity-option { background-color: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: var(--text-light); border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 12px 0; text-align: center; font-size: 1.1rem; font-weight: 500; cursor: pointer; transition: var(--transition); }
-        .ticket-quantity-selector .quantity-option.selected { border-color: var(--accent-color); background: var(--accent-color); color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0, 168, 132, 0.3); }
+        .ticket-quantity-selector .quantity-option { position: relative; background-color: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: var(--text-light); border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 22px 0 12px 0; text-align: center; font-size: 1.1rem; font-weight: 500; cursor: pointer; transition: var(--transition); }
+        .ticket-quantity-selector .quantity-option.selected { border-color: var(--accent-color); background: var(--accent-color); color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 15px rgba(46, 204, 113, 0.3); }
+        .popular::before { content: 'Más Popular'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--accent-color); color: var(--primary-dark); padding: 2px 8px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; }
         .ticket-counter { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 20px; margin-bottom: 25px; }
         .ticket-counter button { background-color: var(--accent-color); color: var(--primary-dark); border:none; border-radius: 50%; width: 45px; height: 45px; font-size: 1.8rem; cursor: pointer; transition: var(--transition); }
         .ticket-counter input { background: transparent; border: 2px solid var(--accent-color); color: var(--text-light); width: 80px; text-align: center; font-size: 1.5rem; font-weight: 600; border-radius: 8px; padding: 5px; }
-        .total-amount-display { background: var(--accent-color); color: white; padding: 12px 20px; text-align: center; border-radius: var(--border-radius); margin-bottom: 30px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 5px 15px rgba(0, 168, 132, 0.3); }
+        .total-amount-display { background: var(--accent-color); color: var(--primary-dark); padding: 12px 20px; text-align: center; border-radius: var(--border-radius); margin-bottom: 30px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); }
         .total-amount-display .label { font-size: 1rem; font-weight: 400; }
         .total-amount-display .amount { font-size: 1.6rem; font-weight: 800; }
         label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-light); }
         input[type="text"], input[type="tel"], input[type="email"], select { width: 100%; padding: 12px 15px; margin-bottom: 20px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 16px; transition: var(--transition); background: rgba(0,0,0,0.2); color: var(--text-light); }
-        input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, select:focus { border-color: var(--accent-color); outline: none; box-shadow: 0 0 0 4px rgba(0, 168, 132, 0.2); }
+        input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, select:focus { border-color: var(--accent-color); outline: none; box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2); }
         .input-error { border-color: var(--error-color) !important; box-shadow: 0 0 0 4px rgba(229, 62, 62, 0.2) !important; }
         .phone-field { display: flex; gap: 10px; margin-bottom: 20px; }
         .phone-field select { -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E0E0E0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; flex: 0 0 120px; margin-bottom: 0;}
         .payment-methods { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
         .payment-methods .method { background-color: white; border: 2px solid var(--border-color); border-radius: var(--border-radius); padding: 10px; display: flex; align-items: center; justify-content: center; height: 60px; width: calc(25% - 10px); min-width: 100px; cursor: pointer; transition: var(--transition); }
-        .payment-methods .method.selected { border-color: var(--accent-color); box-shadow: 0 0 15px rgba(0, 168, 132, 0.5); }
+        .payment-methods .method.selected { border-color: var(--accent-color); box-shadow: 0 0 15px rgba(46, 204, 113, 0.5); }
         .payment-methods .method img { max-height: 90%; max-width: 90%; object-fit: contain; }
         .payment-details { background: rgba(0,0,0,0.2); border-left: 4px solid var(--accent-color); border-radius: 8px; padding: 20px; margin-top: 15px; margin-bottom: 25px; }
         .payment-details p { display: flex; justify-content: space-between; align-items: center; }
@@ -67,8 +71,8 @@
         .upload-area:hover { border-color: var(--accent-color); }
         .upload-area i { font-size: 30px; margin-bottom: 10px; }
         .upload-area p { font-size: 0.9rem; line-height: 1.2; }
-        .btn-confirm { display: block; width: 100%; padding: 16px; border: none; border-radius: 12px; background: var(--accent-color); color: var(--primary-dark); font-size: 18px; font-weight: 600; cursor: pointer; transition: var(--transition); box-shadow: 0 5px 15px rgba(0, 168, 132, 0.3); letter-spacing: 0.5px; }
-        .btn-confirm:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 168, 132, 0.4); }
+        .btn-confirm { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; border: none; border-radius: 12px; background: var(--accent-color); color: var(--primary-dark); font-size: 18px; font-weight: 600; cursor: pointer; transition: var(--transition); box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); letter-spacing: 0.5px; }
+        .btn-confirm:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4); }
         .btn-confirm:active { transform: translateY(0); }
         .success-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(5px); }
         .success-modal { background: #1f2937; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 40px; border-radius: var(--border-radius); text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.2); animation: fadeIn 0.5s ease-in-out; border: 1px solid var(--border-color); }
@@ -81,7 +85,7 @@
         .ticket-verification-section { margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--border-color); }
         .search-box { display: flex; gap: 10px; margin-bottom: 20px; }
         .search-box input { background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: var(--text-light); flex-grow: 1; padding: 15px; font-size: 1rem; border-radius: 12px; transition: var(--transition); }
-        .search-box input:focus { outline: none; box-shadow: 0 0 0 4px rgba(0, 168, 132, 0.2); }
+        .search-box input:focus { outline: none; box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2); }
         .search-box button { background: var(--accent-color); color: var(--primary-dark); border: none; padding: 0 25px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: var(--transition); }
         .search-box button:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .results-container { margin-top: 20px; }
@@ -92,10 +96,10 @@
         .info-card p { color: var(--text-light); font-size: 1.1rem; font-weight: 600; word-wrap: break-word; }
         .all-tickets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-top: 20px; }
         .ticket-number { background: rgba(0,0,0,0.4); color: var(--text-light); padding: 10px; border-radius: 8px; text-align: center; font-weight: 600; font-family: monospace; }
-        .ticket-number.highlight { background: var(--accent-color); color: var(--primary-dark); transform: scale(1.1); box-shadow: 0 0 15px rgba(0, 168, 132, 0.5);}
+        .ticket-number.highlight { background: var(--accent-color); color: var(--primary-dark); transform: scale(1.1); box-shadow: 0 0 15px rgba(46, 204, 113, 0.5);}
         .copy-icon { cursor: pointer; color: var(--text-muted); transition: color 0.3s; padding: 5px; }
         .copy-icon:hover { color: var(--accent-color); }
-        
+
         @media (max-width: 480px) {
             body { padding: 5px; }
             .navbar { padding: 10px 15px; }
@@ -103,6 +107,45 @@
             .section-title { font-size: 1.1rem; }
             .payment-methods { justify-content: space-around; }
             .payment-methods .method { height: 50px; min-width: 80px; }
+            .ticket-quantity-selector {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .phone-field {
+                flex-direction: column;
+                gap: 0;
+            }
+            .phone-field select {
+                margin-bottom: 20px;
+            }
+            .btn-confirm {
+                font-size: 16px;
+            }
+        }
+
+        /* --- CÓDIGO DE ANIMACIÓN --- */
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+          }
+          50% {
+            transform: scale(1.15);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 1);
+          }
+          100% {
+            transform: scale(1);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+          }
+        }
+
+        .icon-premio-principal {
+            color: #FFD700;
+            font-size: 1.4rem;
+            animation: pulse 2s infinite;
         }
     </style>
 </head>
@@ -120,26 +163,26 @@
     <div class="mobile-menu-overlay" id="mobile-menu">
         <div class="mobile-menu-close" id="close-icon">&times;</div>
         <ul class="mobile-menu-links">
-            <li><a href="#" id="link-inicio">Inicio</a></li>
-            <li><a href="#ticket-verification-section" id="link-verificador">Verificador</a></li>
-            <li><a href="#" id="link-soporte">Soporte</a></li>
+            <li><a href="#" id="link-inicio"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#ticket-verification-section" id="link-verificador"><i class="fas fa-ticket"></i> Verificador</a></li>
+            <li><a href="#" id="link-soporte"><i class="fab fa-telegram-plane"></i> Soporte</a></li>
         </ul>
     </div>
     
     <div class="container">
         <div class="main-content">
-            <h2 class="section-title"><span><svg class="section-title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor"><path d="M552 64H448V48C448 21.5 426.5 0 400 0H176c-26.5 0-48 21.5-48 48v16H24C10.7 64 0 74.7 0 88v32c0 13.3 10.7 24 24 24H64v288c0 22.1 17.9 40 40 40h368c22.1 0 40-17.9 40-40V144h40c13.3 0 24-10.7 24-24V88c0-13.3-10.7-24-24-24zM176 144h224v64H176V144z"/></svg> Nuestro Gran Premio</span></h2>
+            <h2 class="section-title"><span><i class="fas fa-gift section-title-icon icon-premio-principal"></i> Nuestro Gran Premio</span></h2>
             <div id="prize-section" class="prize-section">
                 <img id="prize-image" src="" alt="Premio de la Rifa" class="prize-image">
                 <p id="prize-description"></p>
             </div>
 
-            <h2 class="section-title"><span><svg class="section-title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor"><path d="M128 160h320v192H128V160zM576 96H0v320h576V96zM128 0C110.3 0 96 14.3 96 32v32h384V32c0-17.7-14.3-32-32-32H128zM96 448v32c0 17.7 14.3 32 32 32h320c17.7 0 32-14.3 32-32v-32H96z"/></svg> Elige tus Boletos</span></h2>
+            <h2 class="section-title"><span><i class="fas fa-tags section-title-icon"></i> Elige tus Boletos</span></h2>
             <div class="ticket-quantity-selector">
                 <div class="quantity-option" data-quantity="1">1</div>
                 <div class="quantity-option" data-quantity="2">2</div>
                 <div class="quantity-option" data-quantity="5">5</div>
-                <div class="quantity-option" data-quantity="10">10</div>
+                <div class="quantity-option popular" data-quantity="10">10</div>
                 <div class="quantity-option" data-quantity="25">25</div>
                 <div class="quantity-option" data-quantity="50">50</div>
             </div>
@@ -175,14 +218,19 @@
 
             <h2 class="section-title"><span><svg class="section-title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM392 288c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z"/></svg> Modos de Pago</span></h2>
              <div class="payment-methods">
-                <div class="method" data-metodo="paypal"><img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" alt="PayPal"></div>
+                <div class="method" data-metodo="bci"><img src="https://cdn.worldvectorlogo.com/logos/bci-logotype.svg" alt="BCI"></div>
                 <div class="method" data-metodo="binance"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Binance-coin-bnb-logo.png" alt="Binance"></div>
                 <div class="method" data-metodo="zelle"><img src="https://www.logo.wine/a/logo/Zelle_(payment_service)/Zelle_(payment_service)-Logo.wine.svg"></div>
                 <div class="method" data-metodo="mobile"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Banco_de_Venezuela_logo.svg" alt="Pago Móvil"></div>
             </div>
-            <div id="paypalDetails" class="payment-details" style="display:none;">
-                <h3>Datos para PayPal</h3>
-                <p><strong>Correo:</strong> <span class="copyable-text">TU_CORREO_PAYPAL@email.com</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
+            <div id="bciDetails" class="payment-details" style="display:none;">
+                <h3>Datos para Banco BCI (Chile)</h3>
+                <p><strong>Banco:</strong> <span class="copyable-text">BCI</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
+                <p><strong>Tipo de Cuenta:</strong> <span class="copyable-text">Cuenta Corriente</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
+                <p><strong>Nº de Cuenta:</strong> <span class="copyable-text">123456789</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
+                <p><strong>Nombre:</strong> <span class="copyable-text">NOMBRE APELLIDO</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
+                <p><strong>RUT:</strong> <span class="copyable-text">12.345.678-9</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
+                <p><strong>Email:</strong> <span class="copyable-text">tu_correo@bci.cl</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
                 <div class="total-box-payment">Total a Pagar: $<span class="total-amount-payment-display">0.00</span> USD</div>
             </div>
             <div id="binanceDetails" class="payment-details" style="display:none;">
@@ -199,6 +247,7 @@
                 <h3>Datos para Pago Móvil</h3>
                 <p><strong>Banco:</strong> <span class="copyable-text">BANCO DE VENEZUELA</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
                 <p><strong>Teléfono:</strong> <span class="copyable-text">04121234567</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
+                <p><strong>Cédula:</strong> <span class="copyable-text">V-12345678</span> <i class="fas fa-clone copy-icon" title="Copiar"></i></p>
                 <div class="total-box-payment">Total: $<span class="total-amount-payment-display">0.00</span> USD / <span class="total-amount-payment-display-bs">0.00</span> Bs.</div>
             </div>
 
@@ -210,8 +259,10 @@
                 <p id="fileName">Foto o Captura de Pantalla * (Haz clic para subir)</p>
             </div>
             <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="updateFileName()">
-
-            <button id="confirmBtn" class="btn-confirm">CONFIRMAR PAGO</button>
+            
+            <button id="confirmBtn" class="btn-confirm">
+                <i class="fas fa-credit-card"></i> CONFIRMAR PAGO
+            </button>
 
             <div class="ticket-verification-section" id="ticket-verification-section">
                 <h2 class="section-title"><span><svg class="section-title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M432 0H80C35.8 0 0 35.8 0 80v352c0 44.2 35.8 80 80 80h352c44.2 0 80-35.8 80-80V80c0-44.2-35.8-80-80-80zM208 384c-8.8 0-16-7.2-16-16s7.2-16 16-16h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H208zm0-96c-8.8 0-16-7.2-16-16s7.2-16 16-16h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H208zm-48-64c0 17.7-14.3 32-32 32s-32-14.3-32-32 14.3-32 32-32 32 14.3 32 32zm-16 64c-8.8 0-16-7.2-16-16s7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32zm-32 80c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg> Verifica tus Boletos</span></h2>
@@ -236,7 +287,6 @@
     </div>
 
     <script>
-        // El código JavaScript no necesita cambios para esta actualización y permanece igual.
         const CONFIG = {
             raffleName: "RIFA PRUEBA™",
             prizeImageURL: "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg",
@@ -245,7 +295,7 @@
             exchangeRateBS: 36.5, 
             adminWhatsApp: "584127430912",
             supabaseUrl: "https://khzyrpacignaikaonxdh.supabase.co",
-            supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoenlycGFjaWduYWlrYW9ueGRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3NzYzNTksImV4cCI6MjA3MzM1MjM1OX0.0Z1i6WG0V4hJQ1eFtcKxZpmDPi-_5KCogm7xAWVlmfQ"
+            supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoenlycGFjaWduYWlrYW9ueGRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3NzYzNTksImV4cCI6MjA3MzM1MjM1OX0.0Z1i6WG_V4hJQ1eFtcKxZpmDPi-_5KCogm7xAWVlmfQ"
         };
         
         let numTickets = 1;
@@ -313,7 +363,7 @@
                 }
 
                 document.getElementById('confirmBtn').disabled = true;
-                document.getElementById('confirmBtn').textContent = "Procesando...";
+                document.getElementById('confirmBtn').innerHTML = "Procesando...";
 
                 const name = document.getElementById('fullName').value.trim();
                 const id = document.getElementById('idNumber').value.trim();
@@ -330,7 +380,7 @@
                 } else {
                     alert(`Hubo un error al guardar tu información: ${saveResult.error}. Inténtalo de nuevo.`);
                     document.getElementById('confirmBtn').disabled = false;
-                    document.getElementById('confirmBtn').textContent = "CONFIRMAR PAGO";
+                    document.getElementById('confirmBtn').innerHTML = `<i class="fas fa-credit-card"></i> CONFIRMAR PAGO`;
                 }
             });
         });
@@ -537,6 +587,7 @@
     </script>
 </body>
 </html>
+
 
 
 
