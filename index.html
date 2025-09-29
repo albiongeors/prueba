@@ -23,7 +23,7 @@
         html { scroll-behavior: smooth; }
         body { background-color: var(--primary-dark); color: var(--text-light); line-height: 1.6; padding: 10px; min-height: 100vh; }
         .navbar { max-width: 600px; margin: 0 auto 20px auto; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: var(--container-bg); border-radius: var(--border-radius); border: 1px solid var(--border-color); }
-        .navbar-logo img { max-height: 40px; }
+        .navbar-logo img { max-height: 60px; /* Logo más grande */ }
         .hamburger-menu { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 2px solid var(--text-muted); border-radius: 8px; cursor: pointer; transition: var(--transition); }
         .hamburger-menu:hover { border-color: var(--text-light); }
         .hamburger-menu i { font-size: 22px; color: var(--text-muted); transition: var(--transition); }
@@ -43,13 +43,9 @@
         .prize-section { text-align: center; margin-bottom: 20px; }
         .prize-image { max-width: 100%; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); margin-bottom: 20px; }
         #prize-description { font-size: 1rem; color: var(--text-light); font-weight: 400; padding: 10px; }
-        .ticket-quantity-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
-        .ticket-quantity-selector .quantity-option { position: relative; background-color: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: var(--text-light); border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 22px 0 12px 0; text-align: center; font-size: 1.1rem; font-weight: 500; cursor: pointer; transition: var(--transition); }
-        .ticket-quantity-selector .quantity-option.selected { border-color: var(--accent-color); background: var(--accent-color); color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 15px rgba(46, 204, 113, 0.3); }
+        .ticket-quantity-selector { display: none; /* Ocultar selector de cantidad */ }
         .popular::before { content: 'Más Popular'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--accent-color); color: var(--primary-dark); padding: 2px 8px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; }
-        .ticket-counter { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 20px; margin-bottom: 25px; }
-        .ticket-counter button { background-color: var(--accent-color); color: var(--primary-dark); border:none; border-radius: 50%; width: 45px; height: 45px; font-size: 1.8rem; cursor: pointer; transition: var(--transition); }
-        .ticket-counter input { background: transparent; border: 2px solid var(--accent-color); color: var(--text-light); width: 80px; text-align: center; font-size: 1.5rem; font-weight: 600; border-radius: 8px; padding: 5px; }
+        .ticket-counter { display: none; /* Ocultar contador */ }
         .total-amount-display { background: var(--accent-color); color: var(--primary-dark); padding: 12px 20px; text-align: center; border-radius: var(--border-radius); margin-bottom: 30px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); }
         .total-amount-display .label { font-size: 1rem; font-weight: 400; }
         .total-amount-display .amount { font-size: 1.6rem; font-weight: 800; }
@@ -134,20 +130,11 @@
                 <p id="prize-description"></p>
             </div>
 
-            <h2 class="section-title"><span><i class="fas fa-tags section-title-icon"></i> Elige tus Boletos</span></h2>
+            <h2 class="section-title"><span><i class="fas fa-tags section-title-icon"></i> Compra tu Boleto</span></h2>
             <div class="ticket-quantity-selector">
-                <div class="quantity-option" data-quantity="1">1</div>
-                <div class="quantity-option" data-quantity="2">2</div>
-                <div class="quantity-option" data-quantity="5">5</div>
-                <div class="quantity-option popular" data-quantity="10">10</div>
-                <div class="quantity-option" data-quantity="25">25</div>
-                <div class="quantity-option" data-quantity="50">50</div>
-            </div>
+                </div>
             <div class="ticket-counter">
-                <button id="decrementTickets">-</button>
-                <input type="number" id="numTickets" value="1" min="1" readonly>
-                <button id="incrementTickets">+</button>
-            </div>
+                </div>
             <div class="total-amount-display">
                 <span class="label">Total a Pagar:</span>
                 <span class="amount">$ <span id="totalAmount">0.00</span> USD</span>
@@ -268,7 +255,7 @@
         const CONFIG = {
             raffleName: "RIFA GANA CON LOS NARRO™",
             prizeImageURL: "https://i.ibb.co/r20m8qnS/gsnn.jpg",
-            prizeDescription: "Gánate este increíble Moto <strong>BERA 150CC BRF 0 KM</strong> full equipo.",
+            prizeDescription: "Gánate esta increíble Moto <strong>BERA 150CC BRF </strong> TOTALMENTE GRATIS.",
             ticketPriceUSD: 0.00, 
             exchangeRateBS: 0.0, 
             adminWhatsApp: "584226438781",
@@ -276,7 +263,7 @@
             supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoenlycGFjaWduYWlrYW9ueGRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3NzYzNTksImV4cCI6MjA3MzM1MjM1OX0.0Z1i6WG_V4hJQ1eFtcKxZpmDPi-_5KCogm7xAWVlmfQ"
         };
         
-        let numTickets = 1;
+        let numTickets = 1; // Se fija en 1
         let selectedPaymentMethod = '';
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -301,26 +288,7 @@
             
             document.getElementById('link-soporte').href = `https://wa.me/${CONFIG.adminWhatsApp}?text=${encodeURIComponent('Hola, necesito soporte con la rifa.')}`;
             
-            const quantityOptions = document.querySelectorAll('.ticket-quantity-selector .quantity-option');
-            quantityOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    quantityOptions.forEach(o => o.classList.remove('selected'));
-                    this.classList.add('selected');
-                    numTickets = parseInt(this.getAttribute('data-quantity'));
-                    document.getElementById('numTickets').value = numTickets;
-                    updateTotalAmount();
-                });
-            });
-
-            document.getElementById('incrementTickets').addEventListener('click', () => { numTickets++; updateTotalInputAndAmount(); });
-            document.getElementById('decrementTickets').addEventListener('click', () => { if (numTickets > 1) { numTickets--; updateTotalInputAndAmount(); } });
-
-            document.getElementById('numTickets').addEventListener('change', function() {
-                let val = parseInt(this.value);
-                if (isNaN(val) || val < 1) val = 1;
-                numTickets = val;
-                updateTotalInputAndAmount();
-            });
+            // Se eliminan los listeners para seleccionar cantidad, ya que los elementos están ocultos
 
             const paymentMethods = document.querySelectorAll('.payment-methods .method');
             paymentMethods.forEach(method => {
@@ -438,12 +406,6 @@
                     });
                 });
             });
-        }
-
-        function updateTotalInputAndAmount() {
-            document.getElementById('numTickets').value = numTickets;
-            updateTotalAmount();
-            document.querySelectorAll('.ticket-quantity-selector .quantity-option').forEach(o => o.classList.remove('selected'));
         }
 
         function updateTotalAmount() {
@@ -564,5 +526,8 @@
         }
     </script>
 </body>
+
+</html>
+
 
 </html>
