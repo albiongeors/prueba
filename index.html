@@ -57,7 +57,16 @@
         input[type="text"], input[type="tel"], input[type="email"], select { width: 100%; padding: 12px 15px; margin-bottom: 20px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 16px; transition: var(--transition); background: rgba(0,0,0,0.2); color: var(--text-light); }
         input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, select:focus { border-color: var(--accent-color); outline: none; box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2); }
         .input-error { border-color: var(--error-color) !important; box-shadow: 0 0 0 4px rgba(229, 62, 62, 0.2) !important; }
-        .phone-field { display: flex; gap: 10px; margin-bottom: 20px; align-items: center; }
+        
+        /* --- ESTILOS CORREGIDOS PARA EL TELÉFONO --- */
+        .phone-field {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .phone-field input {
+            margin-bottom: 0;
+        }
         
         /* --- ESTILOS MODIFICADOS PARA SELECTOR DE PAÍS --- */
         .phone-field select {
