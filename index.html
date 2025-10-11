@@ -13,7 +13,7 @@
             --accent-color: #2ECC71;
             --text-light: #FFFFFF;
             --text-muted: #A0A0A0;
-            --border-color: rgba(255, 255, 255, 0.1);
+            --border-color: rgba(255, 255, 255, 0.4); /* VISIBILIDAD DE LA LÍNEA ASEGURADA */
             --border-radius: 12px;
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -83,7 +83,17 @@
         .btn-whatsapp { display: inline-flex; align-items: center; gap: 10px; background-color: #25D366; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: var(--transition); }
         .btn-whatsapp:hover { opacity: 0.9; transform: scale(1.05); }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .ticket-verification-section { margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--border-color); }
+        /* ELIMINAMOS EL BORDE SUPERIOR AQUÍ YA QUE LO APLICAREMOS AL CONTENEDOR DE ARRIBA */
+        .ticket-verification-section { margin-top: 40px; padding: 0; border-top: none; }
+        /* NUEVO ESTILO PARA EL BLOQUE DE VERIFICACIÓN */
+        .section-box {
+            background: var(--container-bg); 
+            border-radius: var(--border-radius); 
+            box-shadow: var(--shadow); 
+            border: 1px solid var(--border-color);
+            padding: 25px; /* Relleno interno */
+            margin-bottom: 20px; /* Separación de la siguiente sección */
+        }
         .search-box { display: flex; gap: 10px; margin-bottom: 20px; }
         .search-box input { background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: var(--text-light); flex-grow: 1; padding: 15px; font-size: 1rem; border-radius: 12px; transition: var(--transition); }
         .search-box input:focus { outline: none; box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2); }
@@ -101,12 +111,21 @@
         .copy-icon { cursor: pointer; color: var(--text-muted); transition: color 0.3s; padding: 5px; }
         .copy-icon:hover { color: var(--accent-color); }
         
-        /* --- ESTILOS PARA EL FOOTER --- */
+        /* --- ESTILOS PARA EL FOOTER (AHORA COMO BLOQUE SEPARADO) --- */
         .page-footer {
             padding: 40px 25px 30px 25px;
             text-align: center;
-            border-top: 1px solid var(--border-color); 
-            margin-top: 20px;
+            /* SE ELIMINA EL BORDER-TOP PARA QUE NO SE VEA "PEGADO" A LA SECCIÓN ANTERIOR */
+            border-top: none; 
+            margin-top: 20px; /* Separación del bloque de verificación */
+            /* APLICAMOS EL ESTILO DE BLOQUE AL FOOTER */
+            background: var(--container-bg); 
+            border-radius: var(--border-radius); 
+            box-shadow: var(--shadow); 
+            border: 1px solid var(--border-color);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .connect-section h3 {
             font-size: 1.3rem;
@@ -159,7 +178,15 @@
             opacity: 1;
         }
         
-        @media (max-width: 480px) { body { padding: 5px; } .navbar { padding: 10px 15px; } .main-content { padding: 20px; } .section-title { font-size: 1.1rem; } .payment-methods { justify-content: space-around; } .payment-methods .method { height: 50px; min-width: 80px; } .ticket-quantity-selector { grid-template-columns: repeat(2, 1fr); gap: 15px; } }
+        @media (max-width: 480px) { 
+            body { padding: 5px; } 
+            .navbar { padding: 10px 15px; } 
+            .main-content { padding: 20px; } 
+            .section-title { font-size: 1.1rem; } 
+            .payment-methods { justify-content: space-around; } 
+            .payment-methods .method { height: 50px; min-width: 80px; } 
+            .ticket-quantity-selector { grid-template-columns: repeat(2, 1fr); gap: 15px; } 
+        }
         @media (max-width: 400px) { .btn-confirm { font-size: 16px; } }
         @keyframes pulse { 0% { transform: scale(1); text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); } 50% { transform: scale(1.15); text-shadow: 0 0 20px rgba(255, 215, 0, 1); } 100% { transform: scale(1); text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); } }
         .icon-premio-principal { color: #FFD700; font-size: 1.4rem; animation: pulse 2s infinite; }
@@ -169,7 +196,7 @@
     
     <div class="navbar">
         <div class="navbar-logo">
-            <img src="https://i.ibb.co/HpY6WRSG/IMG-1158.png" alt="Logo de la Rifa">
+            <img src="https://i.ibb.co/20gwLvXP/IMG-1656.png" alt="Logo de la Rifa">
         </div>
         <div class="hamburger-menu" id="hamburger-icon">
             <i class="fas fa-bars"></i>
@@ -292,7 +319,8 @@
                 <i class="fas fa-credit-card"></i> CONFIRMAR PAGO
             </button>
 
-            <div class="ticket-verification-section" id="ticket-verification-section">
+            </div>
+            <div id="ticket-verification-section" class="section-box">
                 <h2 class="section-title"><span><i class="fas fa-ticket section-title-icon"></i> Verifica tus Boletos</span></h2>
                 <div class="search-box">
                     <input type="text" id="ticketSearchInput" placeholder="Ingresa tu número de boleto (ej: 00123)">
@@ -301,34 +329,32 @@
                 <div id="resultsContainer" class="results-container"></div>
             </div>
         </div>
-        
-        <div class="page-footer">
-            <div class="connect-section">
-                <h3>CONÉCTATE CON NOSOTROS</h3>
-                <div class="connect-buttons">
-                    <a href="https://wa.me/584226438781" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Soporte
-                    </a>
-                    <a href="https://www.instagram.com/narro2026/" target="_blank">
-                        <i class="fab fa-instagram"></i> ganaconlosnarro
-                    </a>
-                </div>
-            </div>
-            <div class="lottery-icons">
-                <a href="https://supergana.com.ve/" target="_blank" aria-label="Icono de lotería Super Gana">
-                    <img src="https://supergana.com.ve/img/SUPER%20GANA.png" alt="Super Gana" style="height: 50px;">
+    
+    <div class="page-footer">
+        <div class="connect-section">
+            <h3>COMUNICATE CON NOSOTROS</h3>
+            <div class="connect-buttons">
+                <a href="https://wa.me/584226438781" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Soporte
                 </a>
-            
-                <a href="https://tripletachira.com/" target="_blank" aria-label="Icono de lotería Triple Tachira">
-                   <img src="https://tripletachira.com/img/logos/sd.png" alt="Triple Tachira" style="height: 50px;">
-                </a>
-            
-                <a href="https://ganaconivan.com/" target="_blank" aria-label="Icono de lotería Gana con Ivan">
-                    <img src="https://ganaconivan.com/static/img/conalot.png" alt="Gana con Ivan" style="height: 50px;">
+                <a href="https://www.instagram.com/ganaconlosnarro/" target="_blank">
+                    <i class="fab fa-instagram"></i> ganaconlosnarro
                 </a>
             </div>
         </div>
-
+        <div class="lottery-icons">
+            <a href="https://supergana.com.ve/" target="_blank" aria-label="Icono de lotería Super Gana">
+                <img src="https://supergana.com.ve/img/SUPER%20GANA.png" alt="Super Gana" style="height: 50px;">
+            </a>
+        
+            <a href="https://tripletachira.com/" target="_blank" aria-label="Icono de lotería Triple Tachira">
+               <img src="https://tripletachira.com/img/logos/sd.png" alt="Triple Tachira" style="height: 50px;">
+            </a>
+        
+            <a href="https://ganaconivan.com/" target="_blank" aria-label="Icono de lotería Gana con Ivan">
+                <img src="https://ganaconivan.com/static/img/conalot.png" alt="Gana con Ivan" style="height: 50px;">
+            </a>
+        </div>
     </div>
     
     <div id="success-overlay" class="success-overlay">
@@ -346,13 +372,13 @@
         const CONFIG = {
             raffleName: "RIFA GANA CON LOS NARRO™",
             prizeImageURL: "https://i.ibb.co/JjMwXdsY/365430a4-2f8b-4be0-825d-f258f841d7be.jpg",
-            prizeDescription: "Gánate estA increíble Moto <strong>BERA 150CC BRF </strong> TOTALMENTE GRATIS .",
             ticketPriceUSD: 0.00, 
             exchangeRateBS: 0.0, 
             adminWhatsApp: "584226438781",
             supabaseUrl: "https://fwzqknjzjbtnyaxinlgk.supabase.co",
             supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3enFrbmp6amJ0bnlheGlubGdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxNjg3MTIsImV4cCI6MjA3NDc0NDcxMn0.ZaPuUiuL8UbAzMpLpvz70k-NaBA5jxmufkgqefkzfA8"
         };
+        // Mover CONFIG.prizeDescription dentro de la inicialización para evitar errores si no se encuentra
         
         let numTickets = 1; // Se fija en 1
         let selectedPaymentMethod = '';
@@ -478,7 +504,9 @@
         function initializePage() {
             document.title = CONFIG.raffleName;
             document.getElementById('prize-image').src = CONFIG.prizeImageURL;
-            document.getElementById('prize-description').innerHTML = CONFIG.prizeDescription;
+            // Definición de prizeDescription localmente o asegurando que esté en CONFIG
+            const prizeDescription = "Gánate estA increíble Moto <strong>BERA 150CC BRF </strong> TOTALMENTE GRATIS .";
+            document.getElementById('prize-description').innerHTML = prizeDescription;
         }
 
         function enableCopyToClipboard() {
@@ -619,4 +647,3 @@
 </body>
 
 </html>
-
