@@ -700,6 +700,13 @@
             pricePerTicket: 0,
             adminWhatsApp: "584226438781"
         };
+        
+        // --- CONFIGURACIÓN DE AUTENTICACIÓN ---
+        const AUTH_CONFIG = {
+            username: "admin", // ⚠️ CÁMBIALO
+            password: "securepassword123" // ⚠️ CÁMBIALO
+        };
+        // --------------------------------------
 
         let currentFilter = 'all';
         let currentSearch = '';
@@ -709,7 +716,8 @@
         let duplicateIds = new Set();
 
         function formatTicketNumber(number) {
-            return String(number).padStart(5, '0');
+            // Se cambió de padStart(5, '0') a padStart(4, '0')
+            return String(number).padStart(4, '0');
         }
 
         function cleanPhone(phone) {
@@ -1299,7 +1307,38 @@
             container.innerHTML = html;
         }
 
+        // --- FUNCIÓN DE AUTENTICACIÓN ---
+        function authenticateUser() {
+            let isAuthenticated = false;
+            let attempts = 0;
+
+            while (!isAuthenticated && attempts < 3) {
+                const user = prompt("Ingrese su Usuario:");
+                const pass = prompt("Ingrese su Contraseña:");
+
+                if (user === AUTH_CONFIG.username && pass === AUTH_CONFIG.password) {
+                    isAuthenticated = true;
+                } else {
+                    attempts++;
+                    alert("Credenciales incorrectas. Intento " + attempts + " de 3.");
+                }
+            }
+
+            if (!isAuthenticated) {
+                document.body.innerHTML = `
+                    <div style="text-align:center; padding: 50px; background: white; margin: 50px auto; max-width: 600px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        <i class="fas fa-lock" style="font-size: 40px; color: #dc3545; margin-bottom: 20px;"></i>
+                        <h2>Acceso Denegado</h2>
+                        <p>No ha ingresado las credenciales correctas. El panel de administración no es accesible.</p>
+                    </div>
+                `;
+                document.body.style.background = 'linear-gradient(135deg, #1a2a6c, #3a0ca3, #4361ee)';
+                throw new Error("Acceso denegado por autenticación."); // Detiene la ejecución del script
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            authenticateUser(); // Llama a la autenticación primero
             loadConfig();
             loadTransactions();
             setInterval(loadTransactions, 120000);
@@ -1307,5 +1346,3 @@
     </script>
 </body>
 </html>
-
-
