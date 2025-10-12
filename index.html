@@ -68,10 +68,6 @@
         .payment-details p { display: flex; justify-content: space-between; align-items: center; }
         .payment-details strong { color: var(--text-light); }
         .total-box-payment { background: var(--accent-color); color: var(--primary-dark); padding: 15px; text-align: center; border-radius: 8px; margin-top: 10px; font-size: 1.2rem; font-weight: bold; }
-        .upload-area { border: 2px dashed var(--border-color); border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; color: var(--text-muted); margin-bottom: 25px; transition: var(--transition); }
-        .upload-area:hover { border-color: var(--accent-color); }
-        .upload-area i { font-size: 30px; margin-bottom: 10px; }
-        .upload-area p { font-size: 0.9rem; line-height: 1.2; }
         .btn-confirm { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; border: none; border-radius: 12px; background: var(--accent-color); color: var(--primary-dark); font-size: 18px; font-weight: 600; cursor: pointer; transition: var(--transition); box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); letter-spacing: 0.5px; }
         .btn-confirm:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4); }
         .btn-confirm:active { transform: translateY(0); }
@@ -83,9 +79,7 @@
         .btn-whatsapp { display: inline-flex; align-items: center; gap: 10px; background-color: #25D366; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: var(--transition); }
         .btn-whatsapp:hover { opacity: 0.9; transform: scale(1.05); }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        /* ELIMINAMOS EL BORDE SUPERIOR AQUÍ YA QUE LO APLICAREMOS AL CONTENEDOR DE ARRIBA */
         .ticket-verification-section { margin-top: 40px; padding: 0; border-top: none; }
-        /* NUEVO ESTILO PARA EL BLOQUE DE VERIFICACIÓN */
         .section-box {
             background: var(--container-bg); 
             border-radius: var(--border-radius); 
@@ -110,15 +104,11 @@
         .ticket-number.highlight { background: var(--accent-color); color: var(--primary-dark); transform: scale(1.1); box-shadow: 0 0 15px rgba(46, 204, 113, 0.5);}
         .copy-icon { cursor: pointer; color: var(--text-muted); transition: color 0.3s; padding: 5px; }
         .copy-icon:hover { color: var(--accent-color); }
-        
-        /* --- ESTILOS PARA EL FOOTER (AHORA COMO BLOQUE SEPARADO) --- */
         .page-footer {
             padding: 40px 25px 30px 25px;
             text-align: center;
-            /* SE ELIMINA EL BORDER-TOP PARA QUE NO SE VEA "PEGADO" A LA SECCIÓN ANTERIOR */
             border-top: none; 
-            margin-top: 20px; /* Separación del bloque de verificación */
-            /* APLICAMOS EL ESTILO DE BLOQUE AL FOOTER */
+            margin-top: 20px;
             background: var(--container-bg); 
             border-radius: var(--border-radius); 
             box-shadow: var(--shadow); 
@@ -162,12 +152,11 @@
         .connect-buttons a i {
             font-size: 1.2rem;
         }
-        
         .lottery-icons {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 35px; /* <-- ¡AQUÍ HICE EL CAMBIO! Aumenté el espacio entre los íconos */
+            gap: 35px;
             flex-wrap: wrap;
         }
         .lottery-icons img {
@@ -177,7 +166,6 @@
         .lottery-icons img:hover {
             opacity: 1;
         }
-        
         @media (max-width: 480px) { 
             body { padding: 5px; } 
             .navbar { padding: 10px 15px; } 
@@ -309,11 +297,6 @@
             <h2 class="section-title"><span><svg class="section-title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" fill="currentColor"><path d="M374.6 342.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 402.7V32c0-17.7-14.3-32-32-32s-32 14.3-32 32v370.7L54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0l160-160z"/></svg> Comprobante de Pago</span></h2>
             <label for="referenceNumber">Número de Referencia *</label>
             <input type="text" id="referenceNumber" placeholder="Últimos 6-8 dígitos del comprobante" required>
-            <div class="upload-area" onclick="document.getElementById('fileInput').click();">
-                <i class="fas fa-arrow-up-from-bracket"></i>
-                <p id="fileName">Foto o Captura de Pantalla * (Haz clic para subir)</p>
-            </div>
-            <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="updateFileName()">
             
             <button id="confirmBtn" class="btn-confirm">
                 <i class="fas fa-credit-card"></i> CONFIRMAR PAGO
@@ -361,7 +344,7 @@
         <div class="success-modal">
             <div class="success-icon"><i class="fas fa-circle-check"></i></div>
             <h2>¡Gracias por tu compra!</h2>
-            <p>Hemos registrado tus datos. El último paso es enviar tu comprobante. Serás redirigido a WhatsApp, por favor **adjunta tu comprobante de pago en el chat** y envía el mensaje.</p>
+            <p>Hemos registrado tus datos con éxito. Serás redirigido a WhatsApp para notificar tu pago. Por favor, envía el mensaje que aparece pre-cargado.</p>
             <a href="#" id="goToWhatsAppBtn" class="btn-whatsapp" target="_blank">
                 <i class="fab fa-whatsapp"></i> Ir a WhatsApp
             </a>
@@ -378,7 +361,6 @@
             supabaseUrl: "https://fwzqknjzjbtnyaxinlgk.supabase.co",
             supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3enFrbmp6amJ0bnlheGlubGdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxNjg3MTIsImV4cCI6MjA3NDc0NDcxMn0.ZaPuUiuL8UbAzMpLpvz70k-NaBA5jxmufkgqefkzfA8"
         };
-        // Mover CONFIG.prizeDescription dentro de la inicialización para evitar errores si no se encuentra
         
         let numTickets = 1; // Se fija en 1
         let selectedPaymentMethod = '';
@@ -404,8 +386,6 @@
             });
             
             document.getElementById('link-soporte').href = `https://wa.me/${CONFIG.adminWhatsApp}?text=${encodeURIComponent('Hola, necesito soporte con la rifa.')}`;
-            
-            // Se eliminan los listeners para seleccionar cantidad, ya que los elementos están ocultos
 
             const paymentMethods = document.querySelectorAll('.payment-methods .method');
             paymentMethods.forEach(method => {
@@ -449,7 +429,7 @@
         });
 
         function validateForm() {
-            const fieldsToValidate = document.querySelectorAll('input[required], .upload-area');
+            const fieldsToValidate = document.querySelectorAll('input[required]');
             fieldsToValidate.forEach(field => field.classList.remove('input-error'));
             
             const fullName = document.getElementById('fullName');
@@ -488,14 +468,6 @@
                 referenceNumber.focus();
                 return false;
             }
-            
-            const fileInput = document.getElementById('fileInput');
-            const uploadArea = document.querySelector('.upload-area');
-            if (fileInput.files.length === 0) {
-                alert('Por favor, sube una foto o captura del comprobante de pago.');
-                uploadArea.classList.add('input-error');
-                return false;
-            }
 
             return true;
         }
@@ -504,7 +476,6 @@
         function initializePage() {
             document.title = CONFIG.raffleName;
             document.getElementById('prize-image').src = CONFIG.prizeImageURL;
-            // Definición de prizeDescription localmente o asegurando que esté en CONFIG
             const prizeDescription = "Gánate estA increíble Moto <strong>BERA 150CC BRF </strong> TOTALMENTE GRATIS .";
             document.getElementById('prize-description').innerHTML = prizeDescription;
         }
@@ -537,19 +508,6 @@
         function updatePaymentDetailsTotal(totalUSD, totalBS) {
             document.querySelectorAll('.total-amount-payment-display').forEach(span => span.textContent = totalUSD.toFixed(2));
             document.querySelectorAll('.total-amount-payment-display-bs').forEach(span => span.textContent = totalBS.toFixed(2));
-        }
-
-        function updateFileName() {
-            const fileInput = document.getElementById('fileInput');
-            const fileNameDisplay = document.getElementById('fileName');
-            if (fileInput.files.length > 0) {
-                fileNameDisplay.textContent = fileInput.files[0].name;
-                fileNameDisplay.style.color = 'var(--accent-color)';
-                 document.querySelector('.upload-area').classList.remove('input-error');
-            } else {
-                fileNameDisplay.textContent = "Foto o Captura de Pantalla * (Haz clic para subir)";
-                fileNameDisplay.style.color = 'var(--text-muted)';
-            }
         }
 
         async function saveData(name, id_number, phone, email, tickets, payment_method, reference) {
@@ -586,7 +544,7 @@
             const id = document.getElementById('idNumber').value;
             const reference = document.getElementById('referenceNumber').value;
             const totalUSD = (numTickets * CONFIG.ticketPriceUSD).toFixed(2);
-            const message = encodeURIComponent(`*NUEVO PAGO REPORTADO - ${CONFIG.raffleName}*\n\n*Nº de Transacción:* ${transactionId}\n-----------------------------------\n*Cliente:* ${name}\n*Cédula/RUT:* ${id}\n*Teléfono:* ${phone}\n*Referencia:* ${reference}\n*Boletos:* ${numTickets}\n*Monto:* $${totalUSD} USD\n*Método:* ${selectedPaymentMethod}\n\n_A continuación adjunto mi comprobante de pago._`);
+            const message = encodeURIComponent(`*NUEVO PAGO REPORTADO - ${CONFIG.raffleName}*\n\n*Nº de Transacción:* ${transactionId}\n-----------------------------------\n*Cliente:* ${name}\n*Cédula/RUT:* ${id}\n*Teléfono:* ${phone}\n*Referencia:* ${reference}\n*Boletos:* ${numTickets}\n*Monto:* $${totalUSD} USD\n*Método:* ${selectedPaymentMethod}\n\n_Pago reportado. Por favor verificar._`);
             return `https://wa.me/${CONFIG.adminWhatsApp}?text=${message}`;
         }
 
