@@ -588,9 +588,14 @@
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-crown"></i> Panel de Administración - Rifa GANA CON LOS NARRO</h1>
-            <button class="btn-refresh" onclick="location.reload()">
-                <i class="fas fa-sync-alt"></i> Actualizar Datos
-            </button>
+            <div style="display: flex; gap: 15px;">
+                <button class="btn-refresh" onclick="location.reload()">
+                    <i class="fas fa-sync-alt"></i> Actualizar Datos
+                </button>
+                <button class="btn-delete" onclick="logout()">
+                    <i class="fas fa-right-from-bracket"></i> Salir
+                </button>
+            </div>
         </div>
         
         <div class="config-panel">
@@ -1102,10 +1107,10 @@
                 <div class="modal-content">
                     <h2><i class="fas fa-ticket-alt"></i> Tickets Generados</h2>
                     <p>Se han generado <strong>${tickets.length} tickets</strong> para la transacción <code>#${transactionId}</code>:</p>
-                    <textarea id="ticketNumbers">${ticketNumbers}</textarea>
+                    <textarea readonly id="ticketNumbers">${ticketNumbers}</textarea>
                     <p>Puedes copiar los números o enviarlos directamente por WhatsApp al cliente.</p>
                     <div class="modal-buttons">
-                        <button onclick="copyTicketNumbers()">
+                        <button onclick="copyTicketNumbers(this)">
                             <i class="fas fa-copy"></i> Copiar Números
                         </button>
                         <button class="btn-whatsapp" onclick="sendTicketsByWhatsApp('${phone}', '${ticketNumbers}')">
@@ -1146,6 +1151,8 @@
                 formatTicketNumber(t.ticket_number)
             );
             
+             const ticketNumbersText = formattedTickets.join(', ');
+
             modal.innerHTML = `
                 <div class="modal-content">
                     <div class="ticket-header">
@@ -1173,8 +1180,10 @@
                         ${formattedTickets.map(t => `<span class="ticket-number">${t}</span>`).join('')}
                     </div>
                     
+                    <textarea style="opacity:0; position:absolute; left:-9999px;" id="hiddenTicketNumbers">${ticketNumbersText}</textarea>
+
                     <div class="modal-buttons">
-                        <button onclick="copyTicketNumbers()">
+                        <button onclick="copyTicketNumbers(this)">
                             <i class="fas fa-copy"></i> Copiar Números
                         </button>
                         <button onclick="this.closest('.modal').remove()">
@@ -1187,8 +1196,12 @@
             document.body.appendChild(modal);
         }
 
-        function copyTicketNumbers() {
-            const textarea = document.getElementById('ticketNumbers');
+        function copyTicketNumbers(buttonElement) {
+            // Encuentra el modal padre del botón que se presionó
+            const modal = buttonElement.closest('.modal');
+            // Busca el textarea dentro de ese modal específico
+            const textarea = modal.querySelector('textarea');
+            
             if (textarea) {
                 textarea.select();
                 document.execCommand('copy');
@@ -1307,8 +1320,17 @@
             container.innerHTML = html;
         }
 
-        // --- FUNCIÓN DE AUTENTICACIÓN ---
+        // --- FUNCIÓN DE AUTENTICACIÓN MEJORADA ---
+        function logout() {
+            sessionStorage.removeItem('isAdminAuthenticated');
+            location.reload();
+        }
+        
         function authenticateUser() {
+            if (sessionStorage.getItem('isAdminAuthenticated') === 'true') {
+                return;
+            }
+
             let isAuthenticated = false;
             let attempts = 0;
 
@@ -1318,6 +1340,7 @@
 
                 if (user === AUTH_CONFIG.username && pass === AUTH_CONFIG.password) {
                     isAuthenticated = true;
+                    sessionStorage.setItem('isAdminAuthenticated', 'true');
                 } else {
                     attempts++;
                     alert("Credenciales incorrectas. Intento " + attempts + " de 3.");
